@@ -48,18 +48,20 @@ Workers Nodes|nodes|2|By default Kops will create one Master node and two Worker
 Master Node Type|mastertype|t2.micro|This is ok for a single user small test environment. Anything larger than that will need a bigger machine. Consider t2.large or t2.xlarge if you have multiple people and/or multiple workloads to test. Note that these can machine types can cost money.
 Worker Node Type|nodetype|t2.micro|This is ok only for very light weight single user small test environments. Anything larger than that will need a bigger machine. Consider t2.large or t2.xlarge if you are not able to run multiple workloads. Note that these can machine types can cost money.
 Windows Kubernetes Directory|wink8sdir|$HOME/bin|In Windows 10, the Kops, Kubectl and other utilities needed by this project will be installed into this location. In Windows with Git for Windows installed, the $HOME environment variable is set to root\Users\username.
+AWS Private Key File|pvtkey_file|None|This is the full path to the AWS private key (.PEM) file for your AWS account. It is used by kops to supply the certificate for the k8s cluster.
+AWS Public Key File|pubkey_file|None|This is the full path to the AWS public key (.PUB) file for your AWS account. It is used by kops to supply the certificate for the k8s cluster.
 
-If the default options are acceptable, then you can skip directly to the [Create](#create) section. Otherwise follow the steps below to change the default options.
+- Open a *bash* command prompt (git bash if Windows 10) and change to the directory where you have cloned this project.
 
-- Open a *bash* command prompt (git bash if Windows 10) and change to the directory where you have cloned the *https://github.com/upalepu/kopsk8s.git* project.
-
-- Using your favorite editor create a new file  ***terraform.tfvars*** and add the options as shown in the example below. Note, the sample below only shows a few of the options, you only need to add the options relevant to your situation.
+- Using your favorite editor create a new ***terraform.tfvars*** file and add the options as shown in the example below. Note, the sample below only shows a few of the options, you only need to add the options relevant to your situation. At a minimum, you need to add the **pvtkey_file** and the **pubkey_file**
 
 ```bash
-aws_region = "us-west-2a"
+aws_region = "us-west-2"
 domain = "mycompany.com"
 nodes = 3
 nodetype = "t2.large"
+pvtkey_file = "~/aws/keys/myawsuser.pem"
+pubkey_file = "~/aws/keys/myawsuser.pub"
 ```
 
 - Save the ***terraform.tfvars*** file and make sure it is in the same directory as the kopsk8s.tf Terraform script file. Configuration is complete. You are now ready to create the cluster.
