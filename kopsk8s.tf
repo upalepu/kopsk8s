@@ -102,10 +102,12 @@ module "k8s" {
     region = "${var.aws_region}"
     s3bucket_id = "${module.s3bucket.data["id"]}"
     wink8sdir = "${var.wink8sdir}"
+    pvtkey_file = "${var.pvtkey_file}"
+    pubkey_file = "${var.pubkey_file}"
 }
 // This is used to setup dashboard and metrics 
 module "dashboardetc" {
-    triggers = { k8s = "${module.k8s.done["kopsid"]}" }
+    triggers = { k8s = "${module.k8s.done["k8scompleteid"]}" }
     source = "./modules/lclcmd"
 	cmds = [{ 
 		dir = "${path.root}", 
@@ -116,13 +118,13 @@ $KUBECTL apply -f https://raw.githubusercontent.com/kubernetes/heapster/master/d
 $KUBECTL apply -f https://raw.githubusercontent.com/kubernetes/heapster/master/deploy/kube-config/influxdb/influxdb.yaml
 $KUBECTL apply -f https://raw.githubusercontent.com/kubernetes/heapster/master/deploy/kube-config/rbac/heapster-rbac.yaml
 CMDS
-        ,destroycmd = <<CMDS
+/*        ,destroycmd = <<CMDS
 env | grep -E "OS=" &>/dev/null; if (($?)); then KUBECTL=kubectl; else KUBECTL=kubectl.exe; fi
 $KUBECTL delete -f https://raw.githubusercontent.com/kubernetes/heapster/master/deploy/kube-config/rbac/heapster-rbac.yaml
 $KUBECTL delete -f https://raw.githubusercontent.com/kubernetes/heapster/master/deploy/kube-config/influxdb/influxdb.yaml
 $KUBECTL delete -f https://raw.githubusercontent.com/kubernetes/heapster/master/deploy/kube-config/influxdb/heapster.yaml
 $KUBECTL delete -f https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/recommended/kubernetes-dashboard.yaml            
-CMDS
+CMDS */
 	}]
 }
 // Final messages 
