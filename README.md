@@ -118,7 +118,7 @@ Experiment with the Kubernetes cluster. Try to run the Dashboard using the instr
 
 Follow the steps below for destroying the Kubernetes cluster you created.
 
-- Change to the ***iac/ubuntu*** folder at your bash prompt and type ***terraform destroy***. When prompted, type ***yes*** after making sure that the number of items being destroyed matches the number of items created. You will see the result of the command similar to what is shown below. For brevity, most of the output is not shown.
+- From a bash prompt and type ***terraform destroy***. When prompted, type ***yes*** after making sure that the number of items being destroyed matches the number of items created. You will see the result of the command similar to what is shown below. For brevity, most of the output is not shown.
 
 ```bash
 ubuntu@ip-10-0-1-42:~/kopsk8s$ terraform destroy
