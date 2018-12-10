@@ -6,6 +6,8 @@
 provider "null" { version = "~> 1.0"}
 variable "vpc_id" { description = "Id of the VPC in which to create the k8s cluster." }
 variable "s3bucket_id" { description = "AWS Id of the s3 bucket where state should be stored." }
+variable "pvtkey_file" { description = "Path to the AWS user account private key file. Will be copied to ~/.ssh/id_rsa for use by kops to create k8s cluster." }
+variable "pubkey_file" { description = "Path to the AWS user account public key file. Will be copied to ~/.ssh/id_rsa.pub for use by kops to create k8s cluster." }
 variable "region" { description = "AWS region where the cluster should be created. Default = us-east-1", default = "us-east-1" }
 variable "nodes" { description = "Number of worker nodes in k8s cluster. Default = 2", default = 2 }
 variable "nodetype" { description = "Worker node type (AWS machine type). Default = t2.micro", default = "t2.micro" }
@@ -16,6 +18,7 @@ variable "triggers" { type = "map", description = "Map of triggers", default = {
 variable "wink8sdir" { description = "Location for storing kops and kubectl. User should make sure this is in the PATH", default = "$HOME/bin" }
 variable "adminusertokenfile" { description = "Local file in which to store the admin user token. Default = adminusertoken", default = "adminusertoken" }
 variable "adminsvctokenfile" { description = "Local file in which to store the admin service token. Default = adminsvctoken", default = "adminsvctoken" }
+
 
 locals {
     interpreter = "bash"
@@ -74,6 +77,17 @@ fi
 CMDS
 	}]
 }
+locals { pkidir = "$HOME/.ssh" }
+// Copies the AWS pvt and pub keys to $HOME/.ssh directory where they are expected by kops. 
+module "rsakeysetup" {
+    triggers = "${var.triggers}"
+    source = "../lclcmd"
+	cmds = [{ 
+        dir = "${path.root}", 
+        createcmd = "mkdir -p ${local.pkidir}; cp ${var.pvtkey_file} ${local.pkidir}/id_rsa; cp ${var.pubkey_file} ${local.pkidir}/id_rsa.pub",
+        destroycmd = "rm ${local.pkidir}/id_rsa*"
+    }]
+}
 locals {
     _cluster_name = "${var.subdomain}.${var.domain}"
     _state = "s3://${var.s3bucket_id}"
@@ -86,6 +100,7 @@ resource "null_resource" "k8scluster" {
         state = "${var.s3bucket_id}"
         kops = "${module.kops.done}"
         kubectl = "${module.kubectl.done}"
+        rsakeysetup = "${module.rsakeysetup.done}"
     }
     provisioner "local-exec" {
         when = "create"
@@ -100,10 +115,8 @@ resource "null_resource" "k8scluster" {
         command = <<CMD
 env | grep -E "OS=" &>/dev/null
 if (($?)); then KOPS=${local.linuxkops}; else KOPS=${local.winkops}; fi
-PKIDIR=$HOME/.ssh
-if [[ ! -f $PKIDIR/id_rsa && ! -f $PKIDIR/id_rsa.pub ]]; then
-    if [[ ! -d $PKIDIR ]]; then mkdir -p $PKIDIR; fi
-    ssh-keygen -t rsa -N "" -f $PKIDIR/id_rsa; if (($?)); then exit 1; fi
+if [[ ! -f ${local.pkidir}/id_rsa && ! -f ${local.pkidir}/id_rsa.pub ]]; then
+    mkdir -p ${local.pkidir}; ssh-keygen -t rsa -N "" -f ${local.pkidir}/id_rsa; if (($?)); then exit 1; fi
 fi
 sleep 20s # Needed so DNS for public subdomain can become ready. 
 created=0; tries=0; looplimit=5;	# Safety net to avoid forever loop. 
