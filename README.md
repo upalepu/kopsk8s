@@ -42,7 +42,7 @@ The table below lists several configurable options. Review them to make sure the
 Option|Key|Default Value|Notes
 ---|---|---|---
 AWS Region|aws_region|us-east-1|The Kubernetes cluster will need to be created in a specific AWS region.
-Domain Name|domain|local|***local*** domain is a private domain. A private domain is acceptable for testing and development projects. You don't need to change this for experimentation and testing. If you change this, you need to have a Route53 public domain already setup in AWS.
+Domain Name|domain|local|***local*** domain is a private domain. A private domain is acceptable for testing and development projects. You don't need to change this for experimentation and testing. NOTE: If you want to use a public domain, you need to have a Route53 public domain already setup in AWS. You can find details of setting up a Route53 domain [here](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/setting-up-route-53.html).
 Sub-domain|subdomain|k8s|***k8s*** is the sub-domain. It is not necessary to change this typically.
 Workers Nodes|nodes|2|By default Kops will create one Master node and two Worker nodes.
 Master Node Type|mastertype|t2.micro|This is ok for a single user small test environment. Anything larger than that will need a bigger machine. Consider t2.large or t2.xlarge if you have multiple people and/or multiple workloads to test. Note that these can machine types can cost money.
