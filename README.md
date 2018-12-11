@@ -46,7 +46,7 @@ Domain Name|domain|local|***local*** domain is a private domain. A private domai
 Sub-domain|subdomain|k8s|***k8s*** is the sub-domain. It is not necessary to change this typically.
 Workers Nodes|nodes|2|By default Kops will create one Master node and two Worker nodes.
 Master Node Type|mastertype|t2.micro|This is ok for a single user small test environment. Anything larger than that will need a bigger machine. Consider t2.large or t2.xlarge if you have multiple people and/or multiple workloads to test. Note that these can machine types can cost money.
-Worker Node Type|nodetype|t2.micro|This is ok only for very light weight single user small test environments. Anything larger than that will need a bigger machine. Consider t2.large or t2.xlarge if you are not able to run multiple workloads. Note that these can machine types can cost money.
+Worker Node Type|nodetype|t2.micro|This is ok only for very light weight single user small test environments. Anything larger than that will need a bigger machine. Consider t2.large or t2.xlarge if you are not able to run multiple workloads. Note that these machine types can cost money.
 Windows Kubernetes Directory|wink8sdir|$HOME/bin|In Windows 10, the Kops, Kubectl and other utilities needed by this project will be installed into this location. In Windows with Git for Windows installed, the $HOME environment variable is set to root\Users\username.
 AWS Private Key File|pvtkey_file|None|This is the full path to the AWS private key (.PEM) file for your AWS account. It is used by kops to supply the certificate for the k8s cluster.
 AWS Public Key File|pubkey_file|None|This is the full path to the AWS public key (.PUB) file for your AWS account. It is used by kops to supply the certificate for the k8s cluster.
