@@ -2,8 +2,6 @@
 # Note that commands will run in parallel so there should be
 # no expectation of sequential dependencies between the commands. 
 
-provider "null" { version = "~> 1.0"}
-
 variable "triggers" { type = "map", description = "Map of triggers", default = {} }
 variable "cmds" {
     description = <<DESCRIPTION

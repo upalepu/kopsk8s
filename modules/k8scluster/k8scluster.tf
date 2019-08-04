@@ -3,7 +3,6 @@
 # Note that this module expects to run the commands specific in the 
 # null resource in a bash environment. If it is a windows machine it  expects
 # either a WSL (Ubunut for Windows) or git bash.
-provider "null" { version = "~> 1.0"}
 variable "vpc_id" { description = "Id of the VPC in which to create the k8s cluster." }
 variable "s3bucket_id" { description = "AWS Id of the s3 bucket where state should be stored." }
 variable "pvtkey_file" { description = "Path to the AWS user account private key file. Will be copied to ~/.ssh/id_rsa for use by kops to create k8s cluster." }
