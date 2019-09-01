@@ -14,7 +14,7 @@ variable "mastertype" { description = "Master node type (AWS machine type). Defa
 variable "domain" { description = "Name of the domain. Default = local.", default = "local" }
 variable "subdomain" { description = "Name of the subdomain. Default = k8s.", default = "k8s" }
 variable "triggers" { type = "map", description = "Map of triggers", default = {} }
-variable "wink8sdir" { description = "Location for storing kops and kubectl. User should make sure this is in the PATH", default = "$HOME/bin" }
+variable "wink8sdir" { description = "Location for storing kops and kubectl. User should make sure this is in the PATH", default = "$HOME/.local/bin" }
 variable "adminusertokenfile" { description = "Local file in which to store the admin user token. Default = adminusertoken", default = "adminusertoken" }
 variable "adminsvctokenfile" { description = "Local file in which to store the admin service token. Default = adminsvctoken", default = "adminsvctoken" }
 
@@ -30,7 +30,7 @@ locals {
     linuxkubectl = "kubectl"
 }
 // Downloads and Installs kops if it doesn't exist in $KOPSLOCATION. Does not remove it. 
-// If the platform is "bash" within Windows, then it $KOPSLOCATION is $HOME/bin. It can be overriden by caller.  
+// If the platform is "bash" within Windows, then it $KOPSLOCATION is $HOME/.local/bin. It can be overriden by caller.  
 module "kops" {
     triggers = "${var.triggers}"
     source = "../lclcmd"
@@ -54,7 +54,7 @@ CMDS
 	}]
 }
 // Downloads and Installs kubectl if it doesn't exist in $KUBECTLLOCATION. Does not remove it. 
-// If the platform is "bash" within Windows, then it $KUBECTLLOCATION is $HOME/bin. It can be overriden by caller.  
+// If the platform is "bash" within Windows, then it $KUBECTLLOCATION is $HOME/.local/bin. It can be overriden by caller.  
 module "kubectl" {
     triggers = "${var.triggers}"
     source = "../lclcmd"

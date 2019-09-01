@@ -5,7 +5,7 @@ variable "nodetype" { description = "Worker node type (AWS machine type). Defaul
 variable "mastertype" { description = "Master node type (AWS machine type). Default = t2.micro", default = "t2.micro" }
 variable "domain" { description = "Name of the domain. Default = local.", default = "local" }
 variable "subdomain" { description = "Name of the subdomain. Default = k8s.", default = "k8s" }
-variable "wink8sdir" { description = "Location for storing kops and kubectl. User should make sure this is in the PATH", default = "$HOME/bin" }
+variable "wink8sdir" { description = "Location for storing kops and kubectl. User should make sure this is in the PATH", default = "$HOME/.local/bin" }
 
 variable "comment" { description = "Comment for the hosted zone.", default = "Kubernetes cluster subdomain" }
 
