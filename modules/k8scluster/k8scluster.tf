@@ -7,16 +7,47 @@ variable "vpc_id" { description = "Id of the VPC in which to create the k8s clus
 variable "s3bucket_id" { description = "AWS Id of the s3 bucket where state should be stored." }
 variable "pvtkey_file" { description = "Path to the AWS user account private key file. Will be copied to ~/.ssh/id_rsa for use by kops to create k8s cluster." }
 variable "pubkey_file" { description = "Path to the AWS user account public key file. Will be copied to ~/.ssh/id_rsa.pub for use by kops to create k8s cluster." }
-variable "region" { description = "AWS region where the cluster should be created. Default = us-east-1", default = "us-east-1" }
-variable "nodes" { description = "Number of worker nodes in k8s cluster. Default = 2", default = 2 }
-variable "nodetype" { description = "Worker node type (AWS machine type). Default = t2.micro", default = "t2.micro" }
-variable "mastertype" { description = "Master node type (AWS machine type). Default = t2.micro", default = "t2.micro" }
-variable "domain" { description = "Name of the domain. Default = local.", default = "local" }
-variable "subdomain" { description = "Name of the subdomain. Default = k8s.", default = "k8s" }
-variable "triggers" { type = "map", description = "Map of triggers", default = {} }
-variable "wink8sdir" { description = "Location for storing kops and kubectl. User should make sure this is in the PATH", default = "$HOME/.local/bin" }
-variable "adminusertokenfile" { description = "Local file in which to store the admin user token. Default = adminusertoken", default = "adminusertoken" }
-variable "adminsvctokenfile" { description = "Local file in which to store the admin service token. Default = adminsvctoken", default = "adminsvctoken" }
+variable "region" { 
+    description = "AWS region where the cluster should be created. Default = us-east-1"
+    default = "us-east-1" 
+}
+variable "nodes" { 
+    description = "Number of worker nodes in k8s cluster. Default = 2"
+    default = 2 
+}
+variable "nodetype" { 
+    description = "Worker node type (AWS machine type). Default = t2.micro"
+    default = "t2.micro" 
+}
+variable "mastertype" { 
+    description = "Master node type (AWS machine type). Default = t2.micro"
+    default = "t2.micro" 
+}
+variable "domain" { 
+    description = "Name of the domain. Default = local."
+    default = "local" 
+}
+variable "subdomain" { 
+    description = "Name of the subdomain. Default = k8s."
+    default = "k8s" 
+}
+variable "triggers" { 
+    type = "map"
+    description = "Map of triggers"
+    default = {} 
+}
+variable "wink8sdir" { 
+    description = "Location for storing kops and kubectl. User should make sure this is in the PATH"
+    default = "$HOME/.local/bin" 
+}
+variable "adminusertokenfile" { 
+    description = "Local file in which to store the admin user token. Default = adminusertoken"
+    default = "adminusertoken" 
+}
+variable "adminsvctokenfile" { 
+    description = "Local file in which to store the admin service token. Default = adminsvctoken"
+    default = "adminsvctoken" 
+}
 
 
 locals {
