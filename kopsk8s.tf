@@ -1,10 +1,16 @@
 provider "null" { version = "~> 2.1.2" }
 provider "local" { version = "~> 1.3" }
-provider "aws" { region = "${var.aws_region}", version = "~> 2.22.0" }
+provider "aws" { 
+    region = "${var.aws_region}"
+    version = "~> 2.22.0" 
+}
 provider "template" { version = "~> 2.1" }
 provider "external" { version = "~> 1.2" }
 
-locals { interpreter = "bash", arg1 = "-c" }
+locals { 
+    interpreter = "bash"
+    arg1 = "-c" 
+}
 // Dependency checks. 
 module "depchk" {
     source = "./modules/lclcmd"

@@ -8,15 +8,30 @@ Example: 123456789012-myproject
 DESC
     default = "default" // Dummy, is replaced with above logic. 
 }
-variable "project" { description = "Unique Project Name. Default = s3b-project", default = "s3b-project"  }
-variable "region" { description = "AWS region where bucket should be created. Default = us-east-1", default = "us-east-1" }
+variable "project" { 
+    description = "Unique Project Name. Default = s3b-project"
+    default = "s3b-project"  
+}
+variable "region" { 
+    description = "AWS region where bucket should be created. Default = us-east-1"
+    default = "us-east-1" 
+}
 variable "policy_principal_id" { 
     description = "IAM Principal Id. Default = current aws_caller_identity [12 digit number]"
     default = "default" // Dummy, is replaced with current aws_caller_identity - 12 digit number
 }
-variable "forcedestroy" { description = "Force destroy the object.", default = "true" }
-variable "acl" { description = "Whether ACL is public or private. Default = private", default = "private" }
-variable "versioning_enabled" { description = "Whether versioning is enabled. Default = true", default = "true" }
+variable "forcedestroy" { 
+    description = "Force destroy the object."
+    default = "true" 
+}
+variable "acl" { 
+    description = "Whether ACL is public or private. Default = private"
+    default = "private" 
+}
+variable "versioning_enabled" { 
+    description = "Whether versioning is enabled. Default = true"
+    default = "true" 
+}
 variable "resource" { 
     description = <<DESC
 Path to resource inside the bucket for this project's data. 
