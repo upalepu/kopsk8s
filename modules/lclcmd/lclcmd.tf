@@ -2,7 +2,11 @@
 # Note that commands will run in parallel so there should be
 # no expectation of sequential dependencies between the commands. 
 
-variable "triggers" { type = "map", description = "Map of triggers", default = {} }
+variable "triggers" { 
+    type = "map"
+    description = "Map of triggers"
+    default = {} 
+}
 variable "cmds" {
     description = <<DESCRIPTION
 Specifies a list of cmd maps consisting of the following information
